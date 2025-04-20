@@ -6,6 +6,7 @@ from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 from datetime import datetime
 import os
+from xgboost import XGBClassifier
 
 # Database configuration
 db_params = {
@@ -17,6 +18,10 @@ db_params = {
 }
 
 print("Database configuration:", {k: v for k, v in db_params.items() if k != 'password'})
+
+# Global variables for model caching
+_model = None
+_scaler = None
 
 def get_db_connection():
     """Create and return a database connection"""
@@ -204,28 +209,15 @@ def get_team_data(home_team, away_team, excluded_players=None):
         if connection:
             connection.close()
 
-def predict_match(home_team, away_team, excluded_players=None):
-    """Predict match outcome with probabilities"""
+def train_model():
+    """Train the model once and cache it"""
+    global _model, _scaler
+    
+    if _model is not None and _scaler is not None:
+        return _model, _scaler
+
     connection = None
     try:
-        # Get team data
-        team_data = get_team_data(home_team, away_team, excluded_players)
-        
-        # Create feature vector matching CurrentModel.py
-        features = pd.DataFrame([[
-            team_data['home_value'],
-            team_data['away_value'],
-            team_data['home_goals_scored'],
-            team_data['home_goals_conceded'],
-            team_data['away_goals_scored'],
-            team_data['away_goals_conceded']
-        ]], columns=['home_value', 'away_value', 'home_goals_scored', 'home_goals_conceded', 
-                     'away_goals_scored', 'away_goals_conceded'])
-
-        print("\nFeature vector for prediction:")
-        print(features)
-
-        # Train model on historical data
         connection = get_db_connection()
         cursor = connection.cursor()
 
@@ -272,13 +264,11 @@ def predict_match(home_team, away_team, excluded_players=None):
         y = hist_data['result']
 
         # Scale the features
-        scaler = StandardScaler()
-        X_scaled = scaler.fit_transform(X)
-        features_scaled = scaler.transform(features)
+        _scaler = StandardScaler()
+        X_scaled = _scaler.fit_transform(X)
 
-        # Train model with XGBoost parameters
-        from xgboost import XGBClassifier
-        model = XGBClassifier(
+        # Train model
+        _model = XGBClassifier(
             use_label_encoder=False,
             eval_metric='mlogloss',
             objective='multi:softprob',
@@ -292,7 +282,38 @@ def predict_match(home_team, away_team, excluded_players=None):
             colsample_bytree=0.8,
             gamma=0.5
         )
-        model.fit(X_scaled, y)
+        _model.fit(X_scaled, y)
+
+        return _model, _scaler
+    finally:
+        if connection:
+            connection.close()
+
+def predict_match(home_team, away_team, excluded_players=None):
+    """Predict match outcome with probabilities"""
+    try:
+        # Get team data
+        team_data = get_team_data(home_team, away_team, excluded_players)
+        
+        # Create feature vector
+        features = pd.DataFrame([[
+            team_data['home_value'],
+            team_data['away_value'],
+            team_data['home_goals_scored'],
+            team_data['home_goals_conceded'],
+            team_data['away_goals_scored'],
+            team_data['away_goals_conceded']
+        ]], columns=['home_value', 'away_value', 'home_goals_scored', 'home_goals_conceded', 
+                     'away_goals_scored', 'away_goals_conceded'])
+
+        print("\nFeature vector for prediction:")
+        print(features)
+
+        # Get or train model
+        model, scaler = train_model()
+
+        # Scale features
+        features_scaled = scaler.transform(features)
 
         # Make prediction
         raw_probabilities = model.predict_proba(features_scaled)[0]
@@ -324,12 +345,9 @@ def predict_match(home_team, away_team, excluded_players=None):
 
         return result
 
-    except (Exception, Error) as error:
+    except Exception as error:
         print("Error during prediction:", error)
         raise
-    finally:
-        if connection:
-            connection.close()
 
 def main():
     """Main execution function"""
