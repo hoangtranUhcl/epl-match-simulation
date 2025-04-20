@@ -276,11 +276,13 @@ def predict_match(home_team, away_team, excluded_players=None):
         X_scaled = scaler.fit_transform(X)
         features_scaled = scaler.transform(features)
 
-        # Train model with XGBoost parameters from CurrentModel.py
+        # Train model with XGBoost parameters
         from xgboost import XGBClassifier
         model = XGBClassifier(
             use_label_encoder=False,
             eval_metric='mlogloss',
+            objective='multi:softprob',
+            num_class=3,
             random_state=42,
             n_estimators=150,
             learning_rate=0.05,
@@ -288,7 +290,6 @@ def predict_match(home_team, away_team, excluded_players=None):
             min_child_weight=1,
             subsample=0.8,
             colsample_bytree=0.8,
-            scale_pos_weight=1,
             gamma=0.5
         )
         model.fit(X_scaled, y)
