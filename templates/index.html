@@ -149,104 +149,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Global variables
-        let homePlayers = [];
-        let awayPlayers = [];
-
-        // Team selection handlers
-        document.getElementById('homeTeam').addEventListener('change', function() {
-            const team = this.value;
-            if (team) {
-                loadPlayers(team, 'home');
-            } else {
-                document.getElementById('homePlayers').innerHTML = '<div class="text-muted">Select home team first</div>';
-            }
-            updatePredictButton();
-        });
-
-        document.getElementById('awayTeam').addEventListener('change', function() {
-            const team = this.value;
-            if (team) {
-                loadPlayers(team, 'away');
-            } else {
-                document.getElementById('awayPlayers').innerHTML = '<div class="text-muted">Select away team first</div>';
-            }
-            updatePredictButton();
-        });
-
-        // Load players for a team
-        async function loadPlayers(team, type) {
-            const container = document.getElementById(`${type}Players`);
-            container.innerHTML = '<div class="text-muted">Loading players...</div>';
-            
-            try {
-                const response = await fetch(`/get_star_players/${team}`);
-                if (!response.ok) {
-                    throw new Error('Failed to load players');
-                }
-
-                const data = await response.json();
-                if (data.error) {
-                    throw new Error(data.error);
-                }
-
-                const players = data.players;
-                if (type === 'home') {
-                    homePlayers = players;
-                } else {
-                    awayPlayers = players;
-                }
-                
-                let html = '';
-                players.forEach(player => {
-                    html += `
-                        <div class="form-check">
-                            <input class="form-check-input player-checkbox" type="checkbox" 
-                                   value="${player.id}" 
-                                   id="${type}Player${player.id}"
-                                   data-name="${player.name}"
-                                   data-value="${player.value}">
-                            <label class="form-check-label" for="${type}Player${player.id}">
-                                ${player.name} (£${player.value.toLocaleString()}M)
-                            </label>
-                        </div>
-                    `;
-                });
-                
-                container.innerHTML = html || '<div class="text-muted">No star players found</div>';
-                
-                // Add event listeners to checkboxes
-                container.querySelectorAll('.player-checkbox').forEach(checkbox => {
-                    checkbox.addEventListener('change', updatePrediction);
-                });
-            } catch (error) {
-                console.error('Error loading players:', error);
-                container.innerHTML = '<div class="text-danger">Error loading players</div>';
-            }
-        }
-
-        // Update predict button state
-        function updatePredictButton() {
-            const homeTeam = document.getElementById('homeTeam').value;
-            const awayTeam = document.getElementById('awayTeam').value;
-            document.getElementById('predictBtn').disabled = !(homeTeam && awayTeam);
-        }
-
-        // Add debounce function
-        function debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
-        }
-
-        // Update prediction when players are checked/unchecked
-        const debouncedPrediction = debounce(async function() {
+        // Create debounced prediction function at the top level
+        const debouncedPrediction = debounce(async () => {
             const homeTeam = document.getElementById('homeTeam').value;
             const awayTeam = document.getElementById('awayTeam').value;
             
@@ -299,15 +203,103 @@
             }
         }, 500);  // 500ms debounce
 
-        // Update event listeners
-        document.querySelectorAll('.player-checkbox').forEach(checkbox => {
-            checkbox.addEventListener('change', debouncedPrediction);
+        // Debounce function definition
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Function to update predict button state
+        function updatePredictButton() {
+            const homeTeam = document.getElementById('homeTeam').value;
+            const awayTeam = document.getElementById('awayTeam').value;
+            const predictBtn = document.getElementById('predictBtn');
+            
+            if (homeTeam && awayTeam) {
+                predictBtn.disabled = false;
+            } else {
+                predictBtn.disabled = true;
+            }
+        }
+
+        // Function to load players for a team
+        async function loadPlayers(teamName, targetElement) {
+            if (!teamName) {
+                targetElement.innerHTML = '<p>Please select a team first.</p>';
+                return;
+            }
+
+            try {
+                const response = await fetch(`/get_star_players/${teamName}`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch players');
+                }
+
+                const players = await response.json();
+                if (players.error) {
+                    throw new Error(players.error);
+                }
+
+                let html = '<div class="list-group">';
+                players.forEach((player, index) => {
+                    const playerId = `${targetElement.id === 'homePlayers' ? 'homePlayer' : 'awayPlayer'}_${index}`;
+                    html += `
+                        <div class="list-group-item">
+                            <div class="form-check">
+                                <input type="checkbox" 
+                                       class="form-check-input player-checkbox" 
+                                       id="${playerId}" 
+                                       value="${player.id}"
+                                       data-name="${player.name}"
+                                       data-value="${player.value}">
+                                <label class="form-check-label" for="${playerId}">
+                                    ${player.name} (£${parseFloat(player.value).toLocaleString()}M)
+                                </label>
+                            </div>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+                
+                targetElement.innerHTML = html;
+
+                // Attach event listeners to newly created checkboxes
+                targetElement.querySelectorAll('.player-checkbox').forEach(checkbox => {
+                    checkbox.addEventListener('change', debouncedPrediction);
+                });
+
+            } catch (error) {
+                console.error('Error loading players:', error);
+                targetElement.innerHTML = `
+                    <div class="alert alert-danger">
+                        Error loading players: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        // Event listeners for team selection
+        document.getElementById('homeTeam').addEventListener('change', function() {
+            loadPlayers(this.value, document.getElementById('homePlayers'));
+            updatePredictButton();
+        });
+
+        document.getElementById('awayTeam').addEventListener('change', function() {
+            loadPlayers(this.value, document.getElementById('awayPlayers'));
+            updatePredictButton();
         });
 
         // Make prediction button use the same debounced function
         document.getElementById('predictBtn').addEventListener('click', debouncedPrediction);
 
-        // Display results
+        // Display results function
         function displayResults(result, homeTeam, awayTeam, excludedPlayers) {
             // Update match title
             document.getElementById('matchTitle').textContent = `${homeTeam} vs ${awayTeam}`;
