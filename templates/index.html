@@ -232,8 +232,21 @@
             document.getElementById('predictBtn').disabled = !(homeTeam && awayTeam);
         }
 
+        // Add debounce function
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
         // Update prediction when players are checked/unchecked
-        async function updatePrediction() {
+        const debouncedPrediction = debounce(async function() {
             const homeTeam = document.getElementById('homeTeam').value;
             const awayTeam = document.getElementById('awayTeam').value;
             
@@ -241,28 +254,15 @@
                 return;
             }
 
+            // Show loading
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('predictionResult').style.display = 'none';
+
             // Collect excluded players
             const excludedPlayers = [];
             document.querySelectorAll('.player-checkbox:checked').forEach(checkbox => {
-                excludedPlayers.push({
-                    id: checkbox.value,
-                    name: checkbox.getAttribute('data-name'),
-                    value: checkbox.getAttribute('data-value')
-                });
+                excludedPlayers.push(checkbox.value);
             });
-
-            console.log('Selected Teams:', {
-                home_team: homeTeam,
-                away_team: awayTeam
-            });
-            console.log('Excluded Players:', excludedPlayers);
-
-            const requestData = {
-                home_team: homeTeam,
-                away_team: awayTeam,
-                excluded_players: excludedPlayers.map(p => p.id)
-            };
-            console.log('Sending request data:', requestData);
 
             try {
                 const response = await fetch('/predict', {
@@ -270,7 +270,11 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(requestData)
+                    body: JSON.stringify({
+                        home_team: homeTeam,
+                        away_team: awayTeam,
+                        excluded_players: excludedPlayers
+                    })
                 });
 
                 if (!response.ok) {
@@ -278,18 +282,9 @@
                 }
 
                 const result = await response.json();
-                console.log('Raw prediction result:', result);
-
                 if (result.error) {
                     throw new Error(result.error);
                 }
-
-                // Log the prediction changes
-                console.log('Prediction probabilities:', {
-                    home_win: result.home_win_prob,
-                    draw: result.draw_prob,
-                    away_win: result.away_win_prob
-                });
 
                 displayResults(result, homeTeam, awayTeam, excludedPlayers);
             } catch (error) {
@@ -299,11 +294,18 @@
                         Error updating prediction: ${error.message}
                     </div>
                 `;
+            } finally {
+                document.getElementById('loading').style.display = 'none';
             }
-        }
+        }, 500);  // 500ms debounce
 
-        // Make prediction
-        document.getElementById('predictBtn').addEventListener('click', updatePrediction);
+        // Update event listeners
+        document.querySelectorAll('.player-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', debouncedPrediction);
+        });
+
+        // Make prediction button use the same debounced function
+        document.getElementById('predictBtn').addEventListener('click', debouncedPrediction);
 
         // Display results
         function displayResults(result, homeTeam, awayTeam, excludedPlayers) {
