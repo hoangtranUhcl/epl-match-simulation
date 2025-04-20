@@ -242,9 +242,16 @@
                     throw new Error('Failed to fetch players');
                 }
 
-                const players = await response.json();
-                if (players.error) {
-                    throw new Error(players.error);
+                const data = await response.json();
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                // Access the players array from the response data
+                const players = data.players;
+                if (!players || players.length === 0) {
+                    targetElement.innerHTML = '<div class="text-muted">No players found for this team.</div>';
+                    return;
                 }
 
                 let html = '<div class="list-group">';
