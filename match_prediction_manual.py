@@ -5,15 +5,18 @@ import numpy as np
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 from datetime import datetime
+import os
 
 # Database configuration
 db_params = {
-    "host": "68.74.165.203", 
-    "port": "5432",
-    "database": "EPL",
-    "user": "postgres",
-    "password": "7410"
+    "host": os.environ.get("DB_HOST", "68.74.165.203"),
+    "port": os.environ.get("DB_PORT", "5432"),
+    "database": os.environ.get("DB_NAME", "EPL"),
+    "user": os.environ.get("DB_USER", "postgres"),
+    "password": os.environ.get("DB_PASSWORD", "7410")
 }
+
+print("Database configuration:", {k: v for k, v in db_params.items() if k != 'password'})
 
 def get_db_connection():
     """Create and return a database connection"""

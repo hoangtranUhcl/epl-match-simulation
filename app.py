@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 from match_prediction_manual import get_available_teams, get_star_players, predict_match
 import logging
 import os
+import traceback
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -17,6 +18,7 @@ def index():
         return render_template('index.html', teams=teams)
     except Exception as e:
         logger.error(f"Error loading teams: {str(e)}")
+        logger.error(traceback.format_exc())
         return render_template('error.html', error="Failed to load teams. Please try again later.")
 
 @app.route('/get_star_players/<team_name>')
@@ -25,12 +27,14 @@ def get_team_star_players(team_name):
     try:
         players = get_star_players(team_name)
         if not players:
+            logger.warning(f"No star players found for {team_name}")
             return jsonify({'error': f'No star players found for {team_name}'}), 404
         return jsonify({
             'players': [{'id': str(p[0]), 'name': p[1], 'value': float(p[2])} for p in players]
         })
     except Exception as e:
         logger.error(f"Error getting star players for {team_name}: {str(e)}")
+        logger.error(traceback.format_exc())
         return jsonify({'error': str(e)}), 500
 
 @app.route('/predict', methods=['POST'])
@@ -54,12 +58,13 @@ def predict():
         if 'excluded_players' in data and data['excluded_players']:
             try:
                 excluded_players = [int(player_id) for player_id in data['excluded_players']]
-            except ValueError:
+                logger.info(f"Processing excluded players: {excluded_players}")
+            except ValueError as ve:
                 logger.error(f"Invalid player ID format: {data['excluded_players']}")
                 return jsonify({'error': 'Invalid player ID format'}), 400
-            logger.info(f"Processing excluded players: {excluded_players}")
 
         # Make prediction
+        logger.info(f"Making prediction for {data['home_team']} vs {data['away_team']} with excluded players: {excluded_players}")
         result = predict_match(
             data['home_team'],
             data['away_team'],
@@ -67,10 +72,18 @@ def predict():
         )
         logger.info(f"Prediction result: {result}")
 
+        if not result:
+            logger.error("Prediction returned None")
+            return jsonify({'error': 'Failed to generate prediction'}), 500
+
         return jsonify(result)
     except Exception as e:
         logger.error(f"Error making prediction: {str(e)}")
-        return jsonify({'error': str(e)}), 500
+        logger.error(traceback.format_exc())
+        return jsonify({
+            'error': str(e),
+            'details': traceback.format_exc()
+        }), 500
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
