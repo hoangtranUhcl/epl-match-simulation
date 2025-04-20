@@ -1,0 +1,121 @@
+fixture_date,time,match_id,home_team_name,away_team_name,winner,home_win_prob,draw_prob,away_win_prob
+2/19/25 19:30,19:30:00,1208304,Aston Villa,Liverpool,Away,6.93,12.61,80.47
+4/2/25 18:45,18:45:00,1208320,Manchester City,Leicester,Home,80.8,12.72,6.49
+4/2/25 18:45,18:45:00,1208321,Newcastle,Brentford,Draw,36.87,50.16,12.97
+4/2/25 19:00,19:00:00,1208322,Liverpool,Everton,Home,71.69,23.66,4.65
+4/3/25 19:00,19:00:00,1208319,Chelsea,Tottenham,Away,33.66,18.28,48.06
+4/5/25 11:30,11:30:00,1208327,Everton,Arsenal,Away,18.59,35.38,46.03
+4/5/25 14:00,14:00:00,1208323,West Ham,Bournemouth,Home,56.9,20.53,22.56
+4/5/25 14:00,14:00:00,1208331,Crystal Palace,Brighton,Draw,19.71,45.8,34.49
+4/5/25 14:00,14:00:00,1208329,Ipswich,Wolves,Draw,7.65,51.93,40.42
+4/5/25 16:30,16:30:00,1208326,Aston Villa,Nottingham Forest,Home,55.02,16.3,28.68
+4/6/25 13:00,13:00:00,1208332,Tottenham,Southampton,Home,85.42,5.61,8.97
+4/6/25 13:00,13:00:00,1208325,Brentford,Chelsea,Draw,38.15,53,8.85
+4/6/25 13:00,13:00:00,1208328,Fulham,Liverpool,Away,8.19,44.76,47.05
+4/6/25 15:30,15:30:00,1208324,Manchester United,Manchester City,Away,7.94,5.41,86.65
+4/7/25 19:00,19:00:00,1208330,Leicester,Newcastle,Draw,13.53,56.44,30.03
+2/25/25 19:30,19:30:00,1208286,Wolves,Fulham,Away,28.79,27.81,43.4
+2/25/25 19:30,19:30:00,1208288,Brighton,Bournemouth,Draw,38.4,46.8,14.8
+2/25/25 19:30,19:30:00,1208289,Crystal Palace,Aston Villa,Away,33.45,13.42,53.12
+2/26/25 19:30,19:30:00,1208284,Brentford,Everton,Home,67.36,23.28,9.35
+2/26/25 19:30,19:30:00,1208285,Tottenham,Manchester City,Away,17.38,9.85,72.77
+2/26/25 19:30,19:30:00,1208287,Nottingham Forest,Arsenal,Away,20.06,12.58,67.36
+2/27/25 20:00,20:00:00,1208283,West Ham,Leicester,Home,81.39,10.37,8.24
+2/25/25 20:15,20:15:00,1208290,Chelsea,Southampton,Home,70.78,21.22,8
+2/26/25 19:30,19:30:00,1208292,Manchester United,Ipswich,Home,71.3,15.24,13.45
+2/26/25 20:15,20:15:00,1208291,Liverpool,Newcastle,Draw,43.65,53.42,2.94
+3/8/25 12:30,12:30:00,1208300,Nottingham Forest,Manchester City,Away,17.88,23.95,58.17
+3/8/25 15:00,15:00:00,1208293,Liverpool,Southampton,Home,92.88,5.39,1.72
+3/8/25 15:00,15:00:00,1208299,Crystal Palace,Ipswich,Draw,35.68,41.8,22.52
+3/8/25 15:00,15:00:00,1208301,Brighton,Fulham,Draw,28.54,59.3,12.16
+3/8/25 17:30,17:30:00,1208302,Brentford,Aston Villa,Away,37.73,21,41.27
+3/8/25 20:00,20:00:00,1208295,Wolves,Everton,Home,43.87,32.49,23.65
+3/9/25 14:00,14:00:00,1208297,Tottenham,Bournemouth,Home,40.7,23.21,36.09
+3/9/25 14:00,14:00:00,1208294,Chelsea,Leicester,Home,72.79,12.86,14.35
+3/9/25 16:30,16:30:00,1208298,Manchester United,Arsenal,Away,5.59,6.24,88.17
+3/10/25 20:00,20:00:00,1208296,West Ham,Newcastle,Home,54.16,39.24,6.6
+3/15/25 15:00,15:00:00,1208311,Southampton,Wolves,Draw,3.55,79,17.46
+3/15/25 15:00,15:00:00,1208308,Manchester City,Brighton,Home,56.02,29.56,14.41
+3/15/25 15:00,15:00:00,1208309,Ipswich,Nottingham Forest,Away,6.62,8.93,84.45
+3/15/25 15:00,15:00:00,1208310,Everton,West Ham,Draw,26.3,53.6,20.1
+3/15/25 17:30,17:30:00,1208312,Bournemouth,Brentford,Draw,33.65,44.44,21.91
+3/16/25 13:30,13:30:00,1208305,Fulham,Tottenham,Away,27.19,26.5,46.32
+3/16/25 13:30,13:30:00,1208303,Arsenal,Chelsea,Home,64.42,28.06,7.52
+3/16/25 19:00,19:00:00,1208307,Leicester,Manchester United,Away,5.74,19.04,75.22
+4/1/25 18:45,18:45:00,1208316,Arsenal,Fulham,Home,58.32,31.9,9.79
+4/1/25 18:45,18:45:00,1208315,Wolves,West Ham,Away,15.26,24.31,60.43
+4/1/25 19:00,19:00:00,1208317,Nottingham Forest,Manchester United,Away,24.8,36.93,38.27
+4/2/25 18:45,18:45:00,1208313,Brighton,Aston Villa,Draw,35.77,44.68,19.56
+4/2/25 18:45,18:45:00,1208314,Bournemouth,Ipswich,Draw,30.62,51.47,17.91
+4/2/25 18:45,18:45:00,1208318,Southampton,Crystal Palace,Draw,5.32,48.22,46.46
+4/16/25 18:30,18:30:00,1208306,Newcastle,Crystal Palace,Draw,23.37,49.3,27.34
+4/12/25 16:30,16:30:00,1208335,Arsenal,Brentford,Home,71.6,19.84,8.56
+4/13/25 13:00,13:00:00,1208336,Liverpool,West Ham,Draw,28.23,65.59,6.19
+4/13/25 13:00,13:00:00,1208337,Wolves,Tottenham,Away,24.13,6.09,69.79
+4/13/25 13:00,13:00:00,1208341,Chelsea,Ipswich,Home,61.8,27.85,10.35
+4/13/25 15:30,15:30:00,1208334,Newcastle,Manchester United,Home,36.97,30.48,32.55
+4/14/25 19:00,19:00:00,1208333,Bournemouth,Fulham,Draw,27.38,50,22.63
+4/19/25 14:00,14:00:00,1208348,West Ham,Southampton,Home,79.33,14.18,6.49
+4/19/25 14:00,14:00:00,1208350,Everton,Manchester City,Away,18.72,38.68,42.61
+4/19/25 14:00,14:00:00,1208345,Brentford,Brighton,Draw,37.37,41.03,21.6
+4/19/25 14:00,14:00:00,1208349,Crystal Palace,Bournemouth,Draw,15.48,59.57,24.94
+4/19/25 16:30,16:30:00,1208346,Aston Villa,Newcastle,Draw,25.99,62.6,11.41
+4/20/25 13:00,13:00:00,1208352,Manchester United,Wolves,Home,40.54,33.84,25.62
+4/20/25 13:00,13:00:00,1208351,Fulham,Chelsea,Draw,26.95,44.35,28.71
+4/20/25 13:00,13:00:00,1208344,Ipswich,Arsenal,Away,1.21,2.11,96.68
+4/20/25 15:30,15:30:00,1208343,Leicester,Liverpool,Away,3.25,7.62,89.13
+4/21/25 19:00,19:00:00,1208347,Tottenham,Nottingham Forest,Home,47.47,10.73,41.8
+4/26/25 11:30,11:30:00,1208353,Chelsea,Everton,Home,54.9,20.71,24.39
+4/26/25 14:00,14:00:00,1208355,Newcastle,Ipswich,Home,55.68,36.86,7.46
+5/3/25 14:00,14:00:00,1208372,Leicester,Southampton,Away,25.36,26.66,47.98
+5/3/25 14:00,14:00:00,1208369,Everton,Ipswich,Draw,21.51,64.26,14.24
+5/3/25 16:30,16:30:00,1208368,Arsenal,Bournemouth,Home,71.05,21.96,6.98
+5/4/25 13:00,13:00:00,1208371,Brighton,Newcastle,Draw,22.65,71.53,5.82
+5/4/25 15:00,15:00:00,1208363,Chelsea,Liverpool,Away,7.48,10.39,82.13
+5/5/25 19:00,19:00:00,1208367,Crystal Palace,Nottingham Forest,Away,14.76,28.57,56.67
+5/10/25 15:00,15:00:00,1208377,Newcastle,Chelsea,Home,54.21,16.76,29.03
+5/10/25 15:00,15:00:00,1208373,Liverpool,Arsenal,Draw,18.85,74.73,6.42
+5/10/25 15:00,15:00:00,1208374,Southampton,Manchester City,Away,1.47,3.43,95.1
+5/10/25 15:00,15:00:00,1208375,Tottenham,Crystal Palace,Home,36.65,28.24,35.11
+5/10/25 15:00,15:00:00,1208376,Fulham,Everton,Draw,34.98,51.24,13.78
+5/10/25 15:00,15:00:00,1208378,Nottingham Forest,Leicester,Home,52.85,27.51,19.64
+5/10/25 15:00,15:00:00,1208379,Manchester United,West Ham,Home,37.86,29.69,32.45
+5/10/25 15:00,15:00:00,1208380,Bournemouth,Aston Villa,Away,24.19,37.49,38.32
+5/10/25 15:00,15:00:00,1208381,Ipswich,Brentford,Away,11.33,27.92,60.75
+4/12/25 11:30,11:30:00,1208339,Manchester City,Crystal Palace,Draw,37.79,48.74,13.47
+4/12/25 14:00,14:00:00,1208340,Nottingham Forest,Everton,Home,62.05,29.65,8.31
+4/12/25 14:00,14:00:00,1208342,Southampton,Aston Villa,Away,2.96,31.88,65.16
+4/12/25 14:00,14:00:00,1208338,Brighton,Leicester,Home,52.63,28.86,18.52
+4/26/25 14:00,14:00:00,1208362,Brighton,West Ham,Draw,23.88,64.14,11.98
+4/26/25 14:00,14:00:00,1208354,Wolves,Leicester,Home,44.9,18.69,36.41
+4/26/25 14:00,14:00:00,1208360,Southampton,Fulham,Draw,3.17,81.58,15.25
+4/26/25 14:00,14:00:00,1208361,Nottingham Forest,Brentford,Home,69.53,18.17,12.3
+4/26/25 16:30,16:30:00,1208358,Arsenal,Crystal Palace,Home,66.52,25.57,7.91
+4/27/25 13:00,13:00:00,1208359,Bournemouth,Manchester United,Away,17.29,34.93,47.78
+4/27/25 15:30,15:30:00,1208357,Liverpool,Tottenham,Draw,22.56,75.27,2.16
+4/28/25 19:00,19:00:00,1208356,Manchester City,Aston Villa,Home,51.02,43.7,5.27
+5/2/25 19:00,19:00:00,1208365,Manchester City,Wolves,Draw,26.07,70.84,3.09
+5/3/25 11:30,11:30:00,1208370,Aston Villa,Fulham,Draw,35.82,37.55,26.63
+5/3/25 14:00,14:00:00,1208364,Brentford,Manchester United,Away,19.32,37.02,43.67
+5/3/25 14:00,14:00:00,1208366,West Ham,Tottenham,Home,71.54,11.45,17
+5/10/25 15:00,15:00:00,1208382,Wolves,Brighton,Away,28.61,26.7,44.7
+5/18/25 15:00,15:00:00,1208383,Brentford,Fulham,Draw,40.05,43.52,16.42
+5/18/25 15:00,15:00:00,1208384,Arsenal,Newcastle,Home,65.58,30.28,4.14
+5/18/25 15:00,15:00:00,1208385,Brighton,Liverpool,Draw,24.16,59.51,16.33
+5/18/25 15:00,15:00:00,1208386,Leicester,Ipswich,Away,33.88,27.01,39.11
+5/18/25 15:00,15:00:00,1208387,West Ham,Nottingham Forest,Away,41.1,14.18,44.72
+5/18/25 15:00,15:00:00,1208388,Everton,Southampton,Draw,31.32,42.13,26.56
+5/18/25 15:00,15:00:00,1208389,Aston Villa,Tottenham,Away,32.03,17.56,50.42
+5/18/25 15:00,15:00:00,1208390,Chelsea,Manchester United,Home,45.69,36.51,17.8
+5/18/25 15:00,15:00:00,1208391,Manchester City,Bournemouth,Draw,30.01,58.85,11.13
+5/18/25 15:00,15:00:00,1208392,Crystal Palace,Wolves,Draw,14.15,75.9,9.95
+5/25/25 15:00,15:00:00,1208393,Southampton,Arsenal,Away,1.55,4.7,93.75
+5/25/25 15:00,15:00:00,1208394,Liverpool,Crystal Palace,Draw,30.26,65.36,4.39
+5/25/25 15:00,15:00:00,1208395,Ipswich,West Ham,Draw,6.37,50.57,43.07
+5/25/25 15:00,15:00:00,1208396,Bournemouth,Leicester,Away,31.2,27.19,41.6
+5/25/25 15:00,15:00:00,1208397,Newcastle,Everton,Home,67.06,24.85,8.09
+5/25/25 15:00,15:00:00,1208398,Fulham,Manchester City,Away,12.13,30.52,57.36
+5/25/25 15:00,15:00:00,1208399,Nottingham Forest,Chelsea,Draw,19.84,58.52,21.64
+5/25/25 15:00,15:00:00,1208400,Manchester United,Aston Villa,Away,38.34,13.02,48.63
+5/25/25 15:00,15:00:00,1208401,Wolves,Brentford,Away,23.33,21.02,55.66
+5/25/25 15:00,15:00:00,1208402,Tottenham,Brighton,Away,36.41,16.28,47.31
