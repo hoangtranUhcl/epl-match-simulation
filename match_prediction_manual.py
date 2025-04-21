@@ -8,6 +8,12 @@ from datetime import datetime
 import os
 from xgboost import XGBClassifier
 
+# Add these at the top of the file, after the imports
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+MATCH_RESULTS_PATH = os.path.join(APP_ROOT, 'match_results_optimized.csv')
+PLAYER_VALUES_PATH = os.path.join(APP_ROOT, 'player_values_optimized.csv')
+STAR_PLAYERS_PATH = os.path.join(APP_ROOT, 'star_players_optimized.csv')
+
 # Database configuration
 db_params = {
     "host": os.environ.get("DB_HOST", "68.74.165.203"),
